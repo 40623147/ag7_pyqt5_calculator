@@ -24,12 +24,17 @@ class Dialog(QDialog, Ui_Dialog):
         super(Dialog, self).__init__(parent)
         self.setupUi(self)
         '''以下為使用者自行編寫程式碼區'''
+        self.display.setText('0')
         number = [self.zero, self.one, self.two,self.three, self.four, self.five, self.six, self.seven, self.eight, self.nine]
         for i in number:
             i.clicked.connect(self.digitClicked)
         self.clearAllButton.clicked.connect(self.clearAll)
+        self.wait = True
+        self.plusButton.clicked.connect(self.additiveOperatorClicked)
+        self.temp = 0
+        self.equalButton.clicked.connect(self.equalClicked)
     def digitClicked(self):
-    
+       
         '''
         使用者按下數字鍵, 必須能夠累積顯示該數字
         當顯示幕已經為 0, 再按零不會顯示 00, 而仍顯示 0 或 0.0
