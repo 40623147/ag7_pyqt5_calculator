@@ -34,8 +34,6 @@ class Dialog(QDialog, Ui_Dialog):
             self.display.clear()
             self.wait =False
         self.plusButton.clicked.connect(self.additiveOperatorClicked)
-        
-        self.plusButton.clicked.connect(self.additiveOperatorClicked)
         self.minusButton.clicked.connect(self.additiveOperatorClicked)
         self.pendingAdditiveOperator = ''
         self.temp = 0
@@ -72,6 +70,7 @@ class Dialog(QDialog, Ui_Dialog):
         self.pendingAdditiveOperator = clickedOperator
         self.temp = float(self.display.text())
         self.display.clear()
+        self.wait = True
         
     def multiplicativeOperatorClicked(self):
         '''乘或除按下後進行的處理方法'''
@@ -80,6 +79,8 @@ class Dialog(QDialog, Ui_Dialog):
     def equalClicked(self):
         '''等號按下後的處理方法'''
         #pass
+        self.display.setText(str(self.temp + float(self.display.text())))
+        self.wait = True
     
     def pointClicked(self):
         '''小數點按下後的處理方法'''
@@ -90,7 +91,7 @@ class Dialog(QDialog, Ui_Dialog):
         if "." not in self.display.text():
             self.display.setText(self.display.text() + ".")
  
-        self.waiting= False
+        self.wait= False
         
     def changeSignClicked(self):
         '''變號鍵按下後的處理方法'''
