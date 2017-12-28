@@ -4,8 +4,8 @@
 Module implementing Dialog.
 """
 
-from PyQt5.QtCore import pyqtSlot
-from PyQt5.QtWidgets import QDialog
+from PyQt5.QtCore import *
+from PyQt5.QtWidgets import *
 
 from .Ui_Dialog import Ui_Dialog
 
@@ -47,6 +47,7 @@ class Dialog(QDialog, Ui_Dialog):
         for i in unaryOperator:
             i.clicked.connect(self.unaryOperatorClicked)
         self.dot.clicked.connect(self.pointClicked)
+    
     def digitClicked(self):
        
         '''
@@ -69,20 +70,28 @@ class Dialog(QDialog, Ui_Dialog):
         '''單一運算元按下後處理方法'''
         #pass
         self.display.setText(self.display.text() + self.sender().text())
+    
     def additiveOperatorClicked(self):
         '''加或減按下後進行的處理方法'''
         clickedButton = self.sender()
         clickedOperator = clickedButton.text()
-        self.temp = float(self.display.text())
-
+        operand = float(self.display.text())
+        if self.pendingMultiplicativeOperator:
+            if not self.calculate(operand, self.pendingMultiplicativeOperator):
+                self.abortOperation()
+                return
+            self.display.setText(str(self.factorSoFar))
+            operand = self.factorSoFar
+            self.factorSoFar = 0.0
+            self.pendingMultiplicativeOperator = ''
         if self.pendingAdditiveOperator:
             '''同上'''
-            if not self.calculate(self.temp, self.pendingAdditiveOperator):
+            if not self.calculate(operand, self.pendingAdditiveOperator):
                 self.abortOperation()
                 return
             self.display.setText(str(self.sumSoFar))
         else:
-            self.sumSoFar = self.temp
+            self.sumSoFar = operand
         self.pendingAdditiveOperator = clickedOperator
         self.wait= True
     
@@ -92,8 +101,6 @@ class Dialog(QDialog, Ui_Dialog):
         clickedOperator = clickedButton.text()
         operand = float(self.display.text())
         if self.pendingMultiplicativeOperator:
-            '''同加減法''
-        
             if not self.calculate(operand, self.pendingMultiplicativeOperator):
                 self.abortOperation()
                 return
@@ -101,31 +108,32 @@ class Dialog(QDialog, Ui_Dialog):
         else:
             self.factorSoFar = operand
         self.pendingMultiplicativeOperator = clickedOperator
-        self.waitingForOperand = True
-    def multiplicativeOperatorClicked(self):
-        '''#乘或除按下後進行的處理方法'''
-        
-        #pass
-        clickedButton = self.sender()
-        clickedOperator = clickedButton.text()
-        operand = float(self.display.text())
-        
+        self.wait = True
+    
     def equalClicked(self):
         '''等號按下後的處理方法'''
        #pass
-        self.temp = float(self.display.text())
-        if self.pendingAdditiveOperator:
-            if not self.calculate(self.temp, self.pendingAdditiveOperator):
+        operand = float(self.display.text())
+        if self.pendingMultiplicativeOperator:
+            if not self.calculate(operand, self.pendingMultiplicativeOperator):
                 self.abortOperation()
                 return
- 
+            # factorSoFar 為乘或除運算所得之暫存數值
+            operand = self.factorSoFar
+            self.factorSoFar = 0.0
+            self.pendingMultiplicativeOperator = ''
+        if self.pendingAdditiveOperator:
+            if not self.calculate(operand, self.pendingAdditiveOperator):
+                self.abortOperation()
+                return
             self.pendingAdditiveOperator = ''
         else:
-            self.sumSoFar =self.temp
+            self.sumSoFar = operand
  
         self.display.setText(str(self.sumSoFar))
         self.sumSoFar = 0.0
         self.wait = True
+    
     def pointClicked(self):
         '''小數點按下後的處理方法'''
         #pass
@@ -154,7 +162,6 @@ class Dialog(QDialog, Ui_Dialog):
         #pass
         self.display.clear()
         self.wait = True
-        self.temp = 0
         self.display.setText('0')
     def clearMemory(self):
         '''清除記憶體鍵按下後的處理方法'''
@@ -182,10 +189,12 @@ class Dialog(QDialog, Ui_Dialog):
         
     def calculate(self,  rightOperand, pendingOperator):
         '''計算'''
-        #pass
         if pendingOperator == "+":
             self.sumSoFar += rightOperand
- 
         elif pendingOperator == "-":
             self.sumSoFar -= rightOperand
+        elif pendingOperator == "*":
+            self.factorSoFar *= rightOperand
+        elif pendingOperator == "/":
+            '''TODO: div'''
         return True
