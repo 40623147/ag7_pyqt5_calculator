@@ -79,8 +79,6 @@ class Dialog(QDialog, Ui_Dialog):
     def equalClicked(self):
         '''等號按下後的處理方法'''
         #pass
-        self.display.setText(str(self.temp + float(self.display.text())))
-        self.wait = True
     
     def pointClicked(self):
         '''小數點按下後的處理方法'''
