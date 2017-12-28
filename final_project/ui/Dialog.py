@@ -30,9 +30,16 @@ class Dialog(QDialog, Ui_Dialog):
             i.clicked.connect(self.digitClicked)
         self.clearAllButton.clicked.connect(self.clearAll)
         self.wait = True
+        if self.wait:
+            self.display.clear()
+            self.wait =False
         self.plusButton.clicked.connect(self.additiveOperatorClicked)
+        self.minusButton.clicked.connect(self.additiveOperatorClicked)
+        self.pendingAdditiveOperator = ''
         self.temp = 0
+        self.sumSoFar = 0.0
         self.equalButton.clicked.connect(self.equalClicked)
+        self.dot.clicked.connect(self.pointClicked) 
     def digitClicked(self):
        
         '''
@@ -53,10 +60,21 @@ class Dialog(QDialog, Ui_Dialog):
        
     def unaryOperatorClicked(self):
         '''單一運算元按下後處理方法'''
+<<<<<<< HEAD
         pass
+=======
+        #pass
+        self.display.setText(self.display.text() + self.sender().text())
+>>>>>>> 929adef150322c3f4fff65dd088b46c3d37b5545
     def additiveOperatorClicked(self):
         '''加或減按下後進行的處理方法'''
-        pass
+        #pass
+        clickedButton = self.sender()
+        clickedOperator = clickedButton.text()
+        self.pendingAdditiveOperator = clickedOperator
+        self.temp = float(self.display.text())
+        self.display.clear()
+        self.wait = True
         
     def multiplicativeOperatorClicked(self):
         '''乘或除按下後進行的處理方法'''
@@ -64,12 +82,24 @@ class Dialog(QDialog, Ui_Dialog):
         
     def equalClicked(self):
         '''等號按下後的處理方法'''
+<<<<<<< HEAD
        #pass
         self.display.setText(str(self.temp + float(self.display.text())))
         self.wait = True
+=======
+        #pass
+    
+>>>>>>> 929adef150322c3f4fff65dd088b46c3d37b5545
     def pointClicked(self):
         '''小數點按下後的處理方法'''
-        pass
+        #pass
+        if self.wait:
+            self.display.setText('0')
+ 
+        if "." not in self.display.text():
+            self.display.setText(self.display.text() + ".")
+ 
+        self.wait= False
         
     def changeSignClicked(self):
         '''變號鍵按下後的處理方法'''
@@ -87,6 +117,8 @@ class Dialog(QDialog, Ui_Dialog):
         '''全部清除鍵按下後的處理方法'''
         #pass
         self.display.clear()
+        self.wait = True
+        self.temp = 0
         
     def clearMemory(self):
         '''清除記憶體鍵按下後的處理方法'''
