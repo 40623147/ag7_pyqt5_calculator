@@ -31,7 +31,10 @@ class Dialog(QDialog, Ui_Dialog):
         self.clearAllButton.clicked.connect(self.clearAll)
         self.wait = True
         self.plusButton.clicked.connect(self.additiveOperatorClicked)
+        self.minusButton.clicked.connect(self.additiveOperatorClicked)
+        self.pendingAdditiveOperator = ''
         self.temp = 0
+        self.sumSoFar = 0.0
         self.equalButton.clicked.connect(self.equalClicked)
     def digitClicked(self):
        
@@ -71,7 +74,7 @@ class Dialog(QDialog, Ui_Dialog):
     def equalClicked(self):
         '''等號按下後的處理方法'''
         #pass
-                
+    
     def pointClicked(self):
         '''小數點按下後的處理方法'''
         pass
