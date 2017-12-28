@@ -64,16 +64,20 @@ class Dialog(QDialog, Ui_Dialog):
     def additiveOperatorClicked(self):
         '''加或減按下後進行的處理方法'''
         #pass
-        self.display.clear()
+        clickedButton = self.sender()
+        clickedOperator = clickedButton.text()
+        self.pendingAdditiveOperator = clickedOperator
         self.temp = float(self.display.text())
+        self.display.clear()
+        
     def multiplicativeOperatorClicked(self):
         '''乘或除按下後進行的處理方法'''
         pass
         
     def equalClicked(self):
         '''等號按下後的處理方法'''
-        pass
-        
+        #pass
+                
     def pointClicked(self):
         '''小數點按下後的處理方法'''
         #pass
