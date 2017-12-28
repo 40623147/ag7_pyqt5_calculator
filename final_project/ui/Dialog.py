@@ -93,6 +93,7 @@ class Dialog(QDialog, Ui_Dialog):
         operand = float(self.display.text())
         if self.pendingMultiplicativeOperator:
             '''同加減法''
+        
             if not self.calculate(operand, self.pendingMultiplicativeOperator):
                 self.abortOperation()
                 return
@@ -188,4 +189,3 @@ class Dialog(QDialog, Ui_Dialog):
         elif pendingOperator == "-":
             self.sumSoFar -= rightOperand
         return True
- 
