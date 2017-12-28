@@ -54,7 +54,6 @@ class Dialog(QDialog, Ui_Dialog):
     def unaryOperatorClicked(self):
         '''單一運算元按下後處理方法'''
         pass
-        self.display.setText(self.display.text() + self.sender().text())
     def additiveOperatorClicked(self):
         '''加或減按下後進行的處理方法'''
         pass
@@ -65,8 +64,9 @@ class Dialog(QDialog, Ui_Dialog):
         
     def equalClicked(self):
         '''等號按下後的處理方法'''
-        pass
-        
+       #pass
+        self.display.setText(str(self.temp + float(self.display.text())))
+        self.wait = True
     def pointClicked(self):
         '''小數點按下後的處理方法'''
         pass
