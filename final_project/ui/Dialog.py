@@ -154,7 +154,7 @@ class Dialog(QDialog, Ui_Dialog):
         self.display.clear()
         self.wait = True
         self.temp = 0
-        
+        self.display.setText('0')
     def clearMemory(self):
         '''清除記憶體鍵按下後的處理方法'''
         pass
