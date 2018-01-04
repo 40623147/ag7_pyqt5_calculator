@@ -43,6 +43,7 @@ class Dialog(QDialog, Ui_Dialog):
             button.clicked.connect(self.multiplicativeOperatorClicked)
         self.equalButton.clicked.connect(self.equalClicked)
         self.backspaceButton.clicked.connect(self.backspaceClicked)
+        self.changeSignButton.clicked.connect(self.changeSignClicked)
         unaryOperator = [self.squareRootButton, self.powerButton,  self.reciprocalButton ]
         for i in unaryOperator:
             i.clicked.connect(self.unaryOperatorClicked)
@@ -109,7 +110,6 @@ class Dialog(QDialog, Ui_Dialog):
             self.factorSoFar = operand
         self.pendingMultiplicativeOperator = clickedOperator
         self.wait = True
-
     
     def equalClicked(self):
         '''等號按下後的處理方法'''
@@ -148,16 +148,37 @@ class Dialog(QDialog, Ui_Dialog):
         
     def changeSignClicked(self):
         '''變號鍵按下後的處理方法'''
-        pass
-        
+        #pass
+        text = self.display.text()
+        value = float(text)
+ 
+        if value > 0.0:
+            text = "-" + text
+        elif value < 0.0:
+            text = text[1:]
+ 
+        self.display.setText(text)
     def backspaceClicked(self):
         '''回復鍵按下的處理方法'''
-        pass
-        
+        #pass
+        if self.wait:
+            return
+ 
+        text = self.display.text()[:-1]
+        if not text:
+            text = '0'
+            self.wait= True
+ 
+        self.display.setText(text)
     def clear(self):
         '''清除鍵按下後的處理方法'''
-        pass
-        
+        #pass
+        if self.wait:
+            return
+ 
+        self.display.setText('0')
+        # 清除顯示幕後, 重置等待運算數狀態變數
+        self.wait= True
     def clearAll(self):
         '''全部清除鍵按下後的處理方法'''
         #pass
@@ -168,10 +189,9 @@ class Dialog(QDialog, Ui_Dialog):
         self.display.clear()
         self.wait = True
         self.display.setText('0')
-        
     def clearMemory(self):
         '''清除記憶體鍵按下後的處理方法'''
-        pass
+        #pass
         
     def readMemory(self):
         '''讀取記憶體鍵按下後的處理方法'''
@@ -204,5 +224,6 @@ class Dialog(QDialog, Ui_Dialog):
         elif pendingOperator == "/":
             if rightOperand == 0.0:
                 return False
+            
             self.factorSoFar /= rightOperand
         return True
