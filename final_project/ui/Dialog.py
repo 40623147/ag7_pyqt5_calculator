@@ -109,6 +109,7 @@ class Dialog(QDialog, Ui_Dialog):
             self.factorSoFar = operand
         self.pendingMultiplicativeOperator = clickedOperator
         self.wait = True
+
     
     def equalClicked(self):
         '''等號按下後的處理方法'''
@@ -160,9 +161,14 @@ class Dialog(QDialog, Ui_Dialog):
     def clearAll(self):
         '''全部清除鍵按下後的處理方法'''
         #pass
+        self.sumSoFar = 0.0
+        self.factorSoFar = 0.0
+        self.pendingAdditiveOperator = ''
+        self.pendingMultiplicativeOperator = ''
         self.display.clear()
         self.wait = True
         self.display.setText('0')
+        
     def clearMemory(self):
         '''清除記憶體鍵按下後的處理方法'''
         pass
@@ -196,5 +202,7 @@ class Dialog(QDialog, Ui_Dialog):
         elif pendingOperator == "*":
             self.factorSoFar *= rightOperand
         elif pendingOperator == "/":
-            '''TODO: div'''
+            if rightOperand == 0.0:
+                return False
+            self.factorSoFar /= rightOperand
         return True
