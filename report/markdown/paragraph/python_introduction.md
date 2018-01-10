@@ -22,6 +22,7 @@ print 函式
 ---
 
 重複迴圈
+<img src="https://github.com/40623147/ag7_pyqt5_calculator/blob/gh-pages/picture/%E8%BF%B4%E5%9C%88.png?raw=true" width="500" height="500"></a>
 ---
 
 判斷式
