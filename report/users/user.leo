@@ -258,15 +258,12 @@ abstract: |
 @others</t>
 <t tx="yen.20170429215130.1">啟動與關閉
 ---
-&lt;img src="https://github.com/40623147/ag7_pyqt5_calculator/blob/gh-pages/picture/start-1.png?raw=true" width="500" height="500"&gt;&lt;/a&gt;
-&lt;img src="https://raw.githubusercontent.com/40623147/ag7_pyqt5_calculator/gh-pages/picture/launch.jpg" width="500" height="500"&gt;&lt;/a&gt;
+
 Windows 的內容
 
-有一張圖片：
+&lt;img src="https://github.com/40623147/ag7_pyqt5_calculator/blob/gh-pages/picture/start-1.png?raw=true" width="500" height="500"&gt;&lt;/a&gt;
+&lt;img src="https://raw.githubusercontent.com/40623147/ag7_pyqt5_calculator/gh-pages/picture/launch.jpg" width="500" height="500"&gt;&lt;/a&gt;
 
-![Kmol][]
-
-稱為圖 {@fig:駱駝}。
 
 各 md 檔案可以在 images 目錄下自訂與 md 檔案名稱相同的子目錄存放影像檔案
 
